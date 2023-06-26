@@ -46,5 +46,4 @@ fig = qf.iplot(asFigure=True)
 st.plotly_chart(fig)
 
 # st.write(data.info)
-print(data.earnings())
 
