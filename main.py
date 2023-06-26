@@ -17,21 +17,25 @@ optionInterval = st.sidebar.selectbox("Interval", interval, index=default_interv
 # optionRange = st.sidebar.selectbox("Range", range)
 
 # Retrieve ticker data
-tickers_list = ["AAPL", "AMZN", "EBAY", "FB", "MSFT", "NDAQ", "NFLX", "SPX",
+tickers_list = ["AAPL", "AMZN", "EBAY", "META", "MSFT", "NDAQ", "NFLX", "SPX",
 		   "TSLA", "UBER", "ZM"]
 ticker = st.sidebar.selectbox("Ticker", tickers_list)
 data = yf.Ticker(ticker)
 history = data.history(interval=optionInterval, start=start_date, end=end_date)
-print(optionInterval)
+
 # Ticker information
 string_name = data.info['longName']
 st.header('%s' % string_name)
+price = data.info['currentPrice']
+currency = data.info['currency']
+st.header('%s' % currency + " " + str(price))
+
 
 string_summary = data.info['longBusinessSummary']
 st.info(string_summary)
 
 # Ticker data
-st.header('Ticker data')
+st.header('Price data')
 st.write(history)
 
 # Bollinger bands
@@ -40,4 +44,7 @@ qf=cf.QuantFig(history,title='First Quant Figure',legend='top',name='GS')
 qf.add_bollinger_bands()
 fig = qf.iplot(asFigure=True)
 st.plotly_chart(fig)
+
+# st.write(data.info)
+print(data.earnings())
 
